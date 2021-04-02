@@ -1,4 +1,3 @@
-
 #include "Helicopter.h"
 #include "Obstacles.h"
 #define fps 60
@@ -33,18 +32,6 @@ int main(int argc, char* args[]) {   //the main parameter has to
 	Uint32 red = SDL_MapRGB(screen->format, 255, 0, 0);
 	Uint32 choco = SDL_MapRGB(screen->format, 210, 105, 30);
 	SDL_FillRect(screen, NULL, white);
-
-
-	Helicopter helicopter1(red, window_width/2-34, window_height/2-24, 68, 48);
-	helicopter1.draw(screen);
-
-	Obstacle wall(choco, window_width/1.5, window_height/2.5, 56, 35);
-	
-	//wall.draw(screen);
-	wall.set_image("image.bmp");
-	wall.draw(screen);
-	
-
 
 	SDL_UpdateWindowSurface(window);
 	Uint32 starting_tick;
