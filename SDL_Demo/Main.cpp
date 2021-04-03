@@ -34,12 +34,15 @@ int main(int argc, char* args[]) {   //the main parameter has to
 	SDL_FillRect(screen, NULL, white);
 
 
-	Helicopter heli(red, 0, 0, 25, 25);
+	Helicopter heli(red, window_width/3, window_height/3, 200, 200);
+	heli.set_image("helif.bmp");
+	heli.set_position(100, 100);
 	heli.draw(screen);
 
-	Obstacles wall(choco, 30, 0, 25, 25);
+	Obstacles wall(choco, 30, 20, 200, 200);
+	wall.set_image("tank1_f.bmp");
+	wall.set_position(200, 200);
 	wall.draw(screen);
-
 
 	SDL_UpdateWindowSurface(window);
 	Uint32 starting_tick;

@@ -22,7 +22,7 @@ void Sprite::set_position(int x, int y){
 	rectangle.y = y - origin_y;
 }
 
-void Sprite::set_image(const char filename[]) {
+void Sprite::set_image(const char filename[]=NULL) {
 	if (filename != NULL) {
 		SDL_Surface* loaded_image = NULL;
 		loaded_image = IMG_Load(filename);
