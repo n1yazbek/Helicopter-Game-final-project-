@@ -1,7 +1,7 @@
 #include "Sprite.h"
 
 Sprite::Sprite(Uint32 color, int x_loc, int y_loc, int w, int h){
-	image = SDL_CreateRGBSurface(color, w, h, 32, 0, 0, 0, 0);
+	image = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
 	SDL_FillRect(image, NULL, color);
 	rectangle = image->clip_rect;
 	origin_x = origin_y = 0;

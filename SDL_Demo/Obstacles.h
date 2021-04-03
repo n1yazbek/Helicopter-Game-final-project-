@@ -1,7 +1,7 @@
 #pragma once
 #include "Sprite.h"
-
-class Obstacle :public Sprite {
+//Obstacles();
+class Obstacles :public Sprite {
 public:
-	Obstacle(Uint32 color, int x_loc, int y_loc, int w, int h);
+	Obstacles(Uint32 color, int x_loc, int y_loc, int w, int h);
 };

@@ -1,8 +1,8 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
-class Sprite
-{
+#include <iostream>
+class Sprite{
 	SDL_Surface* image;
 	SDL_Rect rectangle;
 	int origin_x=0, origin_y=0;

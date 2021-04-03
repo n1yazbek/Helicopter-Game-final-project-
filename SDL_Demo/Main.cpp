@@ -5,7 +5,7 @@ using namespace std;
 const int window_width = 640;   //screen dimensions
 const int window_height = 480;
 
-void cap_framerate(Uint32 starting_tick)  {	//function to limit the framerate
+void cap_framerate(Uint32 starting_tick) {	//function to limit the framerate
 	if ((1000 / fps) > SDL_GetTicks() - starting_tick) {
 		SDL_Delay(1000 / fps - (SDL_GetTicks() - starting_tick));
 	}
@@ -25,13 +25,21 @@ int main(int argc, char* args[]) {   //the main parameter has to
 	if (window == NULL) {  //checking whether the window created successfully or not
 		cout << "There was an error while creating the window" << endl
 			<< SDL_GetError() << endl;
-	} 
+	}
 
 	SDL_Surface* screen = SDL_GetWindowSurface(window);
 	Uint32 white = SDL_MapRGB(screen->format, 0, 255, 255);
 	Uint32 red = SDL_MapRGB(screen->format, 255, 0, 0);
 	Uint32 choco = SDL_MapRGB(screen->format, 210, 105, 30);
 	SDL_FillRect(screen, NULL, white);
+
+
+	Helicopter heli(red, 0, 0, 25, 25);
+	heli.draw(screen);
+
+	Obstacles wall(choco, 30, 0, 25, 25);
+	wall.draw(screen);
+
 
 	SDL_UpdateWindowSurface(window);
 	Uint32 starting_tick;
