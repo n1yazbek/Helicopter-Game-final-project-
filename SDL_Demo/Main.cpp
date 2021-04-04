@@ -8,9 +8,9 @@ const int window_height = 480;
 
 int main(int argc, char* args[]) {
 	if (SDL_Init(SDL_INIT_VIDEO) > 0)
-		cout << "SDL_INIT has failed. ERROR: " << SDL_GetError() << endl;
-	if (!(IMG_Init(IMG_INIT_PNG)))
-		cout << "IMG_INIT has failed. ERROR: " << SDL_GetError() << endl;
+		cerr << "SDL_INIT has failed. ERROR: " << SDL_GetError() << endl;
+	if (!((IMG_Init(IMG_INIT_PNG)||(IMG_Init(IMG_INIT_JPG)))))
+		cerr << "IMG_INIT has failed. ERROR: " << SDL_GetError() << endl;
 	else
 		cout << "PNG SUCCESS KRASAVA" << endl;
 	SDL_Event event;
