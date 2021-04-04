@@ -142,12 +142,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="Helicopter.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Obstacles.cpp" />
     <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameWindow.h" />
     <ClInclude Include="Helicopter.h" />
     <ClInclude Include="Obstacles.h" />
     <ClInclude Include="Sprite.h" />
