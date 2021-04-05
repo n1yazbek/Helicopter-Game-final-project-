@@ -3,14 +3,14 @@
 #include <SDL_image.h>
 #include <iostream>
 class Sprite{
-	SDL_Surface* image;
 	SDL_Rect rectangle;
-	int origin_x=0, origin_y=0;
+	SDL_Texture* texture;
+	double x_loc, y_loc;
 public:
-	Sprite(Uint32 color, int x_loc, int y_loc, int w, int h);
-	void draw(SDL_Surface* dst);
-	void set_image(const char filename[]);
-	void update_properties();
-	void set_position(int x, int y);
+	Sprite(double x_loc, double y_loc, double w, double h, SDL_Texture* tex);
+	double GetX()const;
+	double GetY()const;
+	SDL_Texture* GetTex() const;
+	SDL_Rect getRect() const;
 };
 

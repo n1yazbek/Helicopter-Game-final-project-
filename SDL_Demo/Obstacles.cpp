@@ -1,4 +1,5 @@
 #include "Obstacles.h"
-//Obstacle() {}
-Obstacles::Obstacles(Uint32 color, int x_loc, int y_loc, int w, int h)
-	:Sprite(color, x_loc, y_loc, w, h){}
+
+Obstacles::Obstacles(double x_loc, double y_loc, double w, double h,
+	SDL_Texture* tex) :Sprite(x_loc, y_loc, w, h, tex)
+{}

@@ -1,1 +1,8 @@
-﻿  SDL_Demo.vcxproj -> D:\VSCode Projects\SDL_Demo\Debug\SDL_Demo.exe
+﻿  GameWindow.cpp
+D:\VSCode Projects\SDL_Demo\SDL_Demo\GameWindow.cpp(6,30): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+D:\VSCode Projects\SDL_Demo\SDL_Demo\GameWindow.cpp(6,27): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+D:\VSCode Projects\SDL_Demo\SDL_Demo\GameWindow.cpp(34,21): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+D:\VSCode Projects\SDL_Demo\SDL_Demo\GameWindow.cpp(35,21): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  Main.cpp
+  Generating Code...
+  SDL_Demo.vcxproj -> D:\VSCode Projects\SDL_Demo\Debug\SDL_Demo.exe

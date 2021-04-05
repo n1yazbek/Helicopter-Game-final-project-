@@ -1,7 +1,7 @@
 #pragma once
 #include "Sprite.h"
-class Helicopter:public Sprite{
+class Helicopter :public Sprite {
 public:
-	Helicopter(Uint32 color, int x_loc, int y_loc, int w, int h);
-};
+	Helicopter(double x_loc, double y_loc, double w, double h, SDL_Texture* tex);
 
+};
