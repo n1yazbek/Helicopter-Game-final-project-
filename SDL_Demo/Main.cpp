@@ -6,7 +6,7 @@
 #define fps 60
 using namespace std;
 const int window_width = 1280; 
-const  int window_height = 720;
+const int window_height = 720;
 
 void cap_framerate(Uint32 starting_tick) {
 	if ((1000 / fps) > SDL_GetTicks() - starting_tick) {
@@ -27,9 +27,9 @@ int main(int argc, char* args[]) {
 
 	GameWindow window("Helicopter Game", window_width, window_height);
 	SDL_Texture* background = window.loadTexture("citty.jpg");
-	SDL_Texture* heli = window.loadTexture("helico.png");
-	Sprite platform(0, 0, window_width, window_height+500, background);
-	Helicopter helic(100, 100, 423, 150, heli);
+	SDL_Texture* heli = window.loadTexture("helico_orig.png");
+	Sprite platform(0, 0, window_width, window_height, background);
+	Helicopter helic(100, 100, 453, 150, heli);
 
 
 
@@ -42,6 +42,7 @@ int main(int argc, char* args[]) {
 		window.clear();
 		
 		window.render(platform);
+		window.render(helic);
 		
 
 		
