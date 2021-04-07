@@ -12,7 +12,7 @@ double Sprite::GetX()const {
 	return x_loc;
 }
 
-double Sprite::GetY()const {
+double Sprite::GetY()const{
 	return y_loc;
 }
 
@@ -21,6 +21,14 @@ SDL_Texture* Sprite::GetTex()const{
 }
 SDL_Rect Sprite::getRect() const{
 	return rectangle;
+}
+
+void Sprite::move_Up(){
+	y_loc -= 20;
+}
+
+void Sprite::move_Down() {
+	y_loc += 20;
 }
 
 //void Sprite::draw(SDL_Surface* dst){

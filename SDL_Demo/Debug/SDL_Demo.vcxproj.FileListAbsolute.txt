@@ -1,1 +1,0 @@
-D:\VSCode Projects\SDL_Demo\SDL_Demo\Debug\SDL_Demo.exe
