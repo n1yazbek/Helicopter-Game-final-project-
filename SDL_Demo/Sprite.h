@@ -2,6 +2,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
+
+
 class Sprite{
 private:
 	SDL_Rect rectangle;
@@ -10,6 +12,7 @@ protected:
 	double x_loc, y_loc;
 public:
 	Sprite(double x_loc, double y_loc, double w, double h, SDL_Texture* tex);
+	~Sprite();
 	double GetX()const;
 	double GetY()const;
 
@@ -19,6 +22,5 @@ public:
 	void move_Down();
 	void move_Right();
 	void move_Left();
-	void reset_Pos();
 };
 

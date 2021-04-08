@@ -5,6 +5,8 @@ class Obstacles :public Sprite {
 
 	public:
 		Obstacles(double x_loc, double y_loc, double w, double h, SDL_Texture* tex);
-		void move_Right();
+		//~Obstacles();
 		void move_Left();
+		void reset_Pos(const Obstacles &obj);
+		
 };

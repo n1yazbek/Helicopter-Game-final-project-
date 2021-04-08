@@ -1,9 +1,9 @@
 #include "GameWindow.h"
 
-GameWindow::GameWindow(const char* title, double w, double h)
+GameWindow::GameWindow(const char* title)
 	:window(NULL), renderer(NULL){	
 	window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, 
-	SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_SHOWN);
+	SDL_WINDOWPOS_UNDEFINED, GetWidth(), GetHeight(), SDL_WINDOW_SHOWN);
 	if (window == NULL) { 
 		cerr << "There was an error while creating the window" << endl
 			<< SDL_GetError() << endl;
@@ -43,8 +43,13 @@ void GameWindow::display() {
 	SDL_RenderPresent(renderer);
 }
 
-//void GameWindow::draw()
+int GameWindow::GetWidth()const{
+	return width;
+}
 
+int GameWindow::GetHeight() const{
+	return height;
+}
 
 GameWindow::~GameWindow() {
 	SDL_DestroyRenderer(renderer);

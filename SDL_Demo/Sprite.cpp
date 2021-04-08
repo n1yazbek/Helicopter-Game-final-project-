@@ -8,12 +8,17 @@ Sprite::Sprite(double x_loc, double y_loc, double w, double h, SDL_Texture* tex)
 	rectangle.h = h;
 }
 
+Sprite::~Sprite() {
+	SDL_DestroyTexture(texture);
+}
+
 double Sprite::GetX()const {
 	return x_loc;
 }
 
 double Sprite::GetY()const{
 	return y_loc;
+
 }
 
 SDL_Texture* Sprite::GetTex()const{
@@ -24,11 +29,19 @@ SDL_Rect Sprite::getRect() const{
 }
 
 void Sprite::move_Up(){
-	y_loc -= 20;
+	y_loc -= 50;
 }
 
 void Sprite::move_Down() {
-	y_loc += 20;
+	y_loc += 50;
+}
+
+void Sprite::move_Right(){
+	x_loc += 50;
+}
+
+void Sprite::move_Left(){
+	x_loc -= 50;
 }
 
 //void Sprite::draw(SDL_Surface* dst){

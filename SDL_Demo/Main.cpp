@@ -5,8 +5,6 @@
 
 #define fps 60
 using namespace std;
-const int window_width = 1280; 
-const int window_height = 720;
 
 void cap_framerate(Uint32 starting_tick) {
 	if ((1000 / fps) > SDL_GetTicks() - starting_tick) {
@@ -25,25 +23,19 @@ int main(int argc, char* args[]) {
 	bool gameRun = true;
 	Uint32 starting_tick;
 
-	GameWindow window("Helicopter Game", window_width, window_height);
+	GameWindow window("Helicopter Game");
 	SDL_Texture* background = window.loadTexture("citty.jpg");
 	SDL_Texture* heli = window.loadTexture("helico_orig.png");
 	SDL_Texture* wall = window.loadTexture("eifel.png");
-	Sprite platform(0, 0, window_width, window_height, background);
+	Sprite platform(0, 0, window.GetWidth(), window.GetHeight(), background);
 	Helicopter helic(100, 100, 453, 150, heli);
-	Obstacles eifel(800, window_height - 400, 220, 400, wall);
+	Obstacles eifel(800, window.GetWidth() - 400, 220, 400, wall);
 
 	cout<<"The location of the helicopter is : "<<helic.GetX()<<" "<<helic.GetY()<<endl;
 
 	while(gameRun) 
 	{
-		/*while (eifel.GetY() != -(eifel.getRect().h)) {
-			eifel.move_Up();
-		}
-		if (eifel.GetY() == -(eifel.getRect().h))
-			eifel.reset_Pos();*/
-
-
+	
 		starting_tick = SDL_GetTicks();
 		while (SDL_PollEvent(&event)) 
 		{
@@ -55,19 +47,17 @@ int main(int argc, char* args[]) {
 					helic.move_Up();
 				if (event.key.keysym.sym == SDLK_DOWN)
 					helic.move_Down();
+				if (event.key.keysym.sym == SDLK_RIGHT)
+					helic.move_Right();
+				if (event.key.keysym.sym == SDLK_LEFT)
+					helic.move_Left();
 			}
 		}
 
-		
-
 		window.clear();
-		
 		window.render(platform);
 		window.render(helic);
 		window.render(eifel);
-		
-
-		
 		
 		window.display();
 		cap_framerate(starting_tick);
