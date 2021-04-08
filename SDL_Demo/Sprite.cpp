@@ -1,11 +1,25 @@
 #include "Sprite.h"
 
-Sprite::Sprite(double x_loc, double y_loc, double w, double h, SDL_Texture* tex)
+Sprite::Sprite(double x_loc, double y_loc, double w, double h, SDL_Texture* tex, int num_rows, int num_cols)
 :x_loc(x_loc), y_loc(y_loc), texture(tex){
 	rectangle.x = 0;
 	rectangle.y = 0;
-	rectangle.w = w;
-	rectangle.h = h;
+	/*rectangle.w = w;
+	rectangle.h = h;*/
+	texHeight = h;
+	texWidth = w;
+	frameWidth = texWidth / num_cols;
+	frameHeight = texHeight / num_rows;
+	rectangle.w = frameWidth;
+	rectangle.h = frameHeight;
+}
+
+
+int Sprite::GetW_tex() {
+	return texWidth;
+}
+int Sprite::GetH_tex() {
+	return texHeight;
 }
 
 Sprite::~Sprite() {
@@ -42,6 +56,14 @@ void Sprite::move_Right(){
 
 void Sprite::move_Left(){
 	x_loc -= 50;
+}
+
+void Sprite::change_state(){
+	rectangle.x += frameWidth;
+	if (rectangle.x >= rectangle.w)
+		rectangle.x = 0;
+	std::cout << "change state is working" << std::endl;
+
 }
 
 //void Sprite::draw(SDL_Surface* dst){

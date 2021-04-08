@@ -4,7 +4,16 @@
 #include "Obstacles.h"
 
 #define fps 60
+ int frameTime = 0;
 using namespace std;
+
+
+void update(Sprite &obj, int speed) {
+	if (fps / frameTime == speed) {
+		frameTime = 0;
+		obj.change_state();
+	}
+}
 
 void cap_framerate(Uint32 starting_tick) {
 	if ((1000 / fps) > SDL_GetTicks() - starting_tick) {
@@ -25,11 +34,13 @@ int main(int argc, char* args[]) {
 
 	GameWindow window("Helicopter Game");
 	SDL_Texture* background = window.loadTexture("citty.jpg");
-	SDL_Texture* heli = window.loadTexture("helico_orig.png");
+	SDL_Texture* heli = window.loadTexture("helico_f.png");
 	SDL_Texture* wall = window.loadTexture("eifel.png");
-	Sprite platform(0, 0, window.GetWidth(), window.GetHeight(), background);
-	Helicopter helic(100, 100, 453, 150, heli);
-	Obstacles eifel(800, window.GetWidth() - 400, 220, 400, wall);
+	Sprite platform(0, 0, window.GetWidth(), window.GetHeight(), background, 1, 1);
+	Helicopter helic(100, 100, 423, 600, heli, 4, 1);
+	//Obstacles eifel(800, window.GetWidth() - 400, 220, 400, wall);
+	SDL_QueryTexture(helic.GetTex(), NULL, NULL, &helic.texWidth, &helic.texHeight);
+
 
 	cout<<"The location of the helicopter is : "<<helic.GetX()<<" "<<helic.GetY()<<endl;
 
@@ -54,10 +65,25 @@ int main(int argc, char* args[]) {
 			}
 		}
 
+		frameTime++;
+		if (fps / frameTime == 4) {
+			frameTime = 0;
+			helic.change_state();
+			
+
+		}
+		//update(helic, 4);
+		/*if (fps / frameTime == 4) {
+			frameTime = 0;
+
+		}*/
+
+		
 		window.clear();
+		
 		window.render(platform);
 		window.render(helic);
-		window.render(eifel);
+		//window.render(eifel);
 		
 		window.display();
 		cap_framerate(starting_tick);

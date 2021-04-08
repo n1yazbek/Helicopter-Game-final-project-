@@ -8,7 +8,7 @@ GameWindow::GameWindow(const char* title)
 		cerr << "There was an error while creating the window" << endl
 			<< SDL_GetError() << endl;
 	}
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
 }
 
 SDL_Texture* GameWindow::loadTexture(const char* filename) {
