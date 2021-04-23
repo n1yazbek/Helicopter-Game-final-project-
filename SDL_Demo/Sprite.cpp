@@ -1,17 +1,16 @@
 #include "Sprite.h"
 
-Sprite::Sprite(double x_loc, double y_loc, double w, double h, SDL_Texture* tex, int num_rows, int num_cols)
-:x_loc(x_loc), y_loc(y_loc), texture(tex){
+Sprite::Sprite(double x_loc, double y_loc, double w, double h, SDL_Texture* tex, int num_rows, int num_cols, int animspeed)
+:x_loc(x_loc), y_loc(y_loc), texture(tex), rows(num_rows), cols(num_cols), animspeed(animspeed){
 	rectangle.x = 0;
 	rectangle.y = 0;
-	/*rectangle.w = w;
-	rectangle.h = h;*/
 	texHeight = h;
 	texWidth = w;
 	frameWidth = texWidth / num_cols;
 	frameHeight = texHeight / num_rows;
 	rectangle.w = frameWidth;
 	rectangle.h = frameHeight;
+	//SDL_QueryTexture(this->GetTex(), NULL, NULL, &this->texWidth, &this->texHeight);
 }
 
 
@@ -59,34 +58,24 @@ void Sprite::move_Left(){
 }
 
 void Sprite::change_state(){
-	rectangle.x += frameWidth;
-	if (rectangle.x >= rectangle.w)
-		rectangle.x = 0;
+	rectangle.y += frameHeight;
+	if (rectangle.y >= rectangle.h)
+		rectangle.y = 0;
 	std::cout << "change state is working" << std::endl;
-
 }
 
-//void Sprite::draw(SDL_Surface* dst){
-//	//.....
-//}
-//void Sprite::update_properties(){
-//	origin_x = origin_y = 0;
-//	set_position(rectangle.x, rectangle.y);
-//}
-//
-//void Sprite::set_position(int x, int y){
-//	rectangle.x = x - origin_x;
-//	rectangle.y = y - origin_y;
-//}
-//
-//void Sprite::set_image(const char filename[]=NULL) {
-//	if (filename != NULL) {
-//		SDL_Surface* loaded_image = NULL;
-//		loaded_image = IMG_Load(filename);
-//		if (loaded_image != NULL) {
-//			image = loaded_image;
-//			rectangle = image->clip_rect;
-//			update_properties();
-//		}
-//	}
-//}
+double Sprite::getFrameW()
+{
+	return frameWidth;
+}
+
+double Sprite::getFrameH()
+{
+	return frameHeight;
+}
+int Sprite::getRows() {
+	return rows;
+}
+int Sprite::getCols() {
+	return cols;
+}

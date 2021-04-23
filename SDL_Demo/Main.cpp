@@ -39,14 +39,13 @@ int main(int argc, char* args[]) {
 	Sprite platform(0, 0, window.GetWidth(), window.GetHeight(), background, 1, 1);
 	Helicopter helic(100, 100, 423, 600, heli, 4, 1);
 	//Obstacles eifel(800, window.GetWidth() - 400, 220, 400, wall);
-	SDL_QueryTexture(helic.GetTex(), NULL, NULL, &helic.texWidth, &helic.texHeight);
+	//SDL_QueryTexture(helic.GetTex(), NULL, NULL, &helic.texWidth, &helic.texHeight);
 
 
 	cout<<"The location of the helicopter is : "<<helic.GetX()<<" "<<helic.GetY()<<endl;
 
 	while(gameRun) 
 	{
-	
 		starting_tick = SDL_GetTicks();
 		while (SDL_PollEvent(&event)) 
 		{
@@ -66,25 +65,10 @@ int main(int argc, char* args[]) {
 		}
 
 		frameTime++;
-		if (fps / frameTime == 4) {
-			frameTime = 0;
-			helic.change_state();
-			
-
-		}
-		//update(helic, 4);
-		/*if (fps / frameTime == 4) {
-			frameTime = 0;
-
-		}*/
-
 		
 		window.clear();
-		
 		window.render(platform);
 		window.render(helic);
-		//window.render(eifel);
-		
 		window.display();
 		cap_framerate(starting_tick);
 	}

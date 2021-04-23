@@ -23,21 +23,62 @@ void GameWindow::clear() {
 	SDL_RenderClear(renderer);
 }
 
+
 void GameWindow::render(Sprite& sprite) {
 	SDL_Rect src;
-	src.x = sprite.getRect().x;
-	src.y = sprite.getRect().y;
-	src.w = sprite.getRect().w;
-	src.h = sprite.getRect().h;
+	if (sprite.getRows() != 1) {
+		int frameW = sprite.getFrameW(), frameH = sprite.getFrameH();
+		SDL_QueryTexture(sprite.GetTex(), NULL, NULL, &frameW, &frameH);
+		int time = (SDL_GetTicks() / 100) % (sprite.getRows() );
+		src.y = sprite.getFrameH() * time;
+		src.x = sprite.getRect().x;
+		src.w = sprite.getRect().w;
+		src.h = sprite.getRect().h;
+		cout << "Update helic is working" << endl;
+	}
+	else
+	{
+		src.x = sprite.getRect().x;
+		src.y = sprite.getRect().y;
+		src.w = sprite.getRect().w;
+		src.h = sprite.getRect().h;
+	}
 
 	SDL_Rect dst;
 	dst.x = sprite.GetX();
 	dst.y = sprite.GetY();
-	dst.w = sprite.getRect().w ;
+	dst.w = sprite.getRect().w;
 	dst.h = sprite.getRect().h;
 
-	SDL_RenderCopy(renderer, sprite.GetTex(), &src, &dst);
+	SDL_Texture* txt = sprite.GetTex();
+	//clear();
+	SDL_RenderCopy(renderer, txt, &src, &dst);
 }
+
+void GameWindow::renderFrame(Sprite& sprite) {
+	int frameW = sprite.getFrameW(), frameH = sprite.getFrameH();
+	SDL_QueryTexture(sprite.GetTex(), NULL, NULL, &frameW, &frameH);
+	SDL_Rect src;
+	int frame=(SDL_GetTicks()/100)% sprite.frameCount;
+	src.x = sprite.getFrameW();
+	src.y = sprite.getFrameH() * frame;
+	src.w = sprite.getFrameW();
+	src.h = sprite.getFrameH();
+
+	SDL_Rect dst;
+	dst.x = sprite.GetX();
+	dst.y = sprite.GetY();
+	dst.w = sprite.getRect().w;
+	dst.h = sprite.getRect().h;
+
+	SDL_Texture* txt = sprite.GetTex();
+	SDL_RenderCopy(renderer, txt, &src, &dst);
+}
+
+void GameWindow::Update(float dt) {
+	
+}
+
 
 void GameWindow::display() {
 	SDL_RenderPresent(renderer);
