@@ -3,40 +3,40 @@
 #include <SDL_image.h>
 #include <iostream>
 
-
 class Sprite{
 private:
 	SDL_Rect rectangle;
 	SDL_Texture* texture;
-	SDL_Rect image_rect;
+	/*SDL_Rect image_rect;*/
 	int frameWidth, frameHeight;
 	int rows, cols;
-	
-	
-protected:
-	double x_loc, y_loc;
-public:
 	int texWidth, texHeight;
-	int animspeed;
 	int frameCount = rows * cols;
-
-
-	Sprite(double x_loc, double y_loc, double w, double h, SDL_Texture* tex, int num_rows, int num_cols, int animspeed=0);
-	~Sprite();
+protected:
+	int x_loc, y_loc;
+	int animspeed;
+public:
+	
+	Sprite(int x_loc, int y_loc, int w, int h,
+		SDL_Texture* tex, int num_rows, int num_cols, int animspeed);
+	void SetX(int n);
+	void SetY(int n);
 	double GetX()const;
 	double GetY()const;
-	int GetW_tex();
-	int GetH_tex();
+	int GetW_tex()const;
+	int GetH_tex()const;
 	SDL_Texture* GetTex() const;
 	SDL_Rect getRect() const;
-	void move_Up();
-	void move_Down();
-	void move_Right();
-	void move_Left();
+	virtual void move_Up();
+	virtual void move_Down();
+	virtual void move_Right();
+	virtual void move_Left();
 	void change_state();
-	double getFrameW();
-	double getFrameH();
-	int getRows();
-	int getCols();
+	int getFrameW()const;
+	int getFrameH()const;
+	int getRows()const;
+	int getCols()const;
+	int getAnimSpeed()const;
+	//friend bool operator== (const Car& c1, const Car& c2);
 };
 

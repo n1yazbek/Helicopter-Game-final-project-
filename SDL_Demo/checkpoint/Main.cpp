@@ -4,19 +4,21 @@
 #include "Obstacles.h"
 
 #define fps 60
+ int frameTime = 0;
 using namespace std;
+
+
+void update(Sprite &obj, int speed) {
+	if (fps / frameTime == speed) {
+		frameTime = 0;
+		obj.change_state();
+	}
+}
 
 void cap_framerate(Uint32 starting_tick) {
 	if ((1000 / fps) > SDL_GetTicks() - starting_tick) {
 		SDL_Delay(1000 / fps - (SDL_GetTicks() - starting_tick));
 	}
-}
-
- int control_type(){
-	int control;
-	cout << "Choose how to control: " << endl << "1) UP&DOWN keys\n2) MOUSE\n";
-	cin >> control;
-	return control;
 }
 
 int main(int argc, char* args[]) {
@@ -29,45 +31,44 @@ int main(int argc, char* args[]) {
 	SDL_Event event;
 	bool gameRun = true;
 	Uint32 starting_tick;
-	
+
 	GameWindow window("Helicopter Game");
-	SDL_Texture* background = window.loadTexture("clouds_f.jpg");
+	SDL_Texture* background = window.loadTexture("citty.jpg");
 	SDL_Texture* heli = window.loadTexture("helico_f.png");
-	SDL_Texture* wall = window.loadTexture("fire_image.png");
-	Sprite platform(0, 0, 7680, 720, background, 1, 6, 1000);
-	Helicopter helic(100, 100, 423, 600, heli, 4, 1, 80);
-	Obstacles fire(900, 300, 738, 50, wall, 1, 5, 500);
+	SDL_Texture* wall = window.loadTexture("eifel.png");
+	Sprite platform(0, 0, window.GetWidth(), window.GetHeight(), background, 1, 1);
+	Helicopter helic(100, 100, 423, 600, heli, 4, 1);
+	//Obstacles eifel(800, window.GetWidth() - 400, 220, 400, wall);
+	//SDL_QueryTexture(helic.GetTex(), NULL, NULL, &helic.texWidth, &helic.texHeight);
+
+
+	cout<<"The location of the helicopter is : "<<helic.GetX()<<" "<<helic.GetY()<<endl;
 
 	while(gameRun) 
 	{
 		starting_tick = SDL_GetTicks();
-		unsigned int lastTime = 0;
-		
 		while (SDL_PollEvent(&event)) 
 		{
 			if (event.type == SDL_QUIT){ gameRun = false; }
 			if (event.type == SDL_KEYDOWN) {
 				if(event.key.keysym.sym == SDLK_ESCAPE) 
 					gameRun = false;
-					if (event.key.keysym.sym == SDLK_UP)
-						helic.move_Up();
-					if (event.key.keysym.sym == SDLK_DOWN)
-						helic.move_Down();
-					if (event.key.keysym.sym == SDLK_RIGHT)
-						helic.move_Right();
-					if (event.key.keysym.sym == SDLK_LEFT)
-						helic.move_Left();
+				if (event.key.keysym.sym == SDLK_UP)
+					helic.move_Up();
+				if (event.key.keysym.sym == SDLK_DOWN)
+					helic.move_Down();
+				if (event.key.keysym.sym == SDLK_RIGHT)
+					helic.move_Right();
+				if (event.key.keysym.sym == SDLK_LEFT)
+					helic.move_Left();
 			}
 		}
-		if (starting_tick > lastTime + 1000) {
-			fire.move_Left();
-			lastTime = starting_tick;
-		}
+
+		frameTime++;
 		
 		window.clear();
 		window.render(platform);
 		window.render(helic);
-		window.render(fire);
 		window.display();
 		cap_framerate(starting_tick);
 	}

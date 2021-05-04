@@ -2,11 +2,13 @@
 #include "Sprite.h"
 
 class Obstacles :public Sprite {
-
 	public:
-		Obstacles(double x_loc, double y_loc, double w, double h, SDL_Texture* tex, int num_rows, int num_cols);
-		//~Obstacles();
+		Obstacles(int x_loc, int y_loc, int w, int h,
+			SDL_Texture* tex, int num_rows, int num_cols, int animspeed);
+		/*Obstacles() {}*/
+		void move_Up();
+		void move_Down();
+		void move_Right();
 		void move_Left();
-		void reset_Pos(const Obstacles &obj);
 		
 };

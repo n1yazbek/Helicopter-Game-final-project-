@@ -14,7 +14,8 @@ public:
 	GameWindow(const char* title);
 	SDL_Texture* loadTexture(const char* filename);
 	void clear();
-	void render(const Sprite& sprite);
+	void render(Sprite& sprite);
+	void renderFrame(Sprite& sprite);
 	void display();
 	int GetWidth()const;
 	int GetHeight()const;

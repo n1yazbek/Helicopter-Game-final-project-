@@ -23,22 +23,21 @@ void GameWindow::clear() {
 	SDL_RenderClear(renderer);
 }
 
-void GameWindow::render(const Sprite& sprite) {
+
+void GameWindow::render(Sprite& sprite) {
 	SDL_Rect src;
-	
-	if (sprite.getRows() != 1 || sprite.getCols()!=1) {
-		int cls = 1;
+	if (sprite.getRows() != 1) {
 		int frameW = sprite.getFrameW(), frameH = sprite.getFrameH();
 		SDL_QueryTexture(sprite.GetTex(), NULL, NULL, &frameW, &frameH);
-		int time_r = (SDL_GetTicks() / sprite.getAnimSpeed()) % (sprite.getRows() );
-		int time_c = (SDL_GetTicks() / sprite.getAnimSpeed()) % (sprite.getCols());
-		src.y = sprite.getFrameH() * time_r;
-		src.x = sprite.getFrameW() * time_c;
+		int time = (SDL_GetTicks() / 100) % (sprite.getRows() );
+		src.y = sprite.getFrameH() * time;
+		src.x = sprite.getRect().x;
 		src.w = sprite.getRect().w;
 		src.h = sprite.getRect().h;
 		cout << "Update helic is working" << endl;
 	}
-	else{
+	else
+	{
 		src.x = sprite.getRect().x;
 		src.y = sprite.getRect().y;
 		src.w = sprite.getRect().w;
@@ -56,25 +55,25 @@ void GameWindow::render(const Sprite& sprite) {
 	SDL_RenderCopy(renderer, txt, &src, &dst);
 }
 
-//void GameWindow::renderFrame(Sprite& sprite) {
-//	int frameW = sprite.getFrameW(), frameH = sprite.getFrameH();
-//	SDL_QueryTexture(sprite.GetTex(), NULL, NULL, &frameW, &frameH);
-//	SDL_Rect src;
-//	int frame=(SDL_GetTicks()/100)% sprite.frameCount;
-//	src.x = sprite.getFrameW();
-//	src.y = sprite.getFrameH() * frame;
-//	src.w = sprite.getFrameW();
-//	src.h = sprite.getFrameH();
-//
-//	SDL_Rect dst;
-//	dst.x = sprite.GetX();
-//	dst.y = sprite.GetY();
-//	dst.w = sprite.getRect().w;
-//	dst.h = sprite.getRect().h;
-//
-//	SDL_Texture* txt = sprite.GetTex();
-//	SDL_RenderCopy(renderer, txt, &src, &dst);
-//}
+void GameWindow::renderFrame(Sprite& sprite) {
+	int frameW = sprite.getFrameW(), frameH = sprite.getFrameH();
+	SDL_QueryTexture(sprite.GetTex(), NULL, NULL, &frameW, &frameH);
+	SDL_Rect src;
+	int frame=(SDL_GetTicks()/100)% sprite.frameCount;
+	src.x = sprite.getFrameW();
+	src.y = sprite.getFrameH() * frame;
+	src.w = sprite.getFrameW();
+	src.h = sprite.getFrameH();
+
+	SDL_Rect dst;
+	dst.x = sprite.GetX();
+	dst.y = sprite.GetY();
+	dst.w = sprite.getRect().w;
+	dst.h = sprite.getRect().h;
+
+	SDL_Texture* txt = sprite.GetTex();
+	SDL_RenderCopy(renderer, txt, &src, &dst);
+}
 
 void GameWindow::Update(float dt) {
 	

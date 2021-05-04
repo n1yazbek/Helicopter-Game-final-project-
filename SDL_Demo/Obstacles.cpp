@@ -1,26 +1,33 @@
 #include "Obstacles.h"
 
-Obstacles::Obstacles(double x_loc, double y_loc, double w, double h,
-	SDL_Texture* tex, int num_rows, int num_cols) :Sprite(x_loc, y_loc, w, h, tex, num_rows, num_cols)
-{}
 
-void Obstacles::move_Left(){
-	y_loc = -20;
+Obstacles::Obstacles(int x_loc, int y_loc, int w, int h,
+	SDL_Texture* tex, int num_rows, int num_cols, int animspeed)
+	:Sprite(x_loc, y_loc, w, h, tex, num_rows, num_cols, animspeed){}
+
+//Obstacles::Obstacles() {}
+void Obstacles::move_Up() {
+	y_loc -= 5;
+	if (this->GetY() <= - this->getFrameH())
+		y_loc = 720 + this->getFrameH();
 }
 
-
-void Obstacles::reset_Pos(const Obstacles &obj) {
-	x_loc = 1280 - obj.getRect().w;
+void Obstacles::move_Down() {
+	y_loc += 5;
+	if (this->GetY() >= 720 + this->getFrameH()) 
+		y_loc =  - this->getFrameH();
 }
 
-//
-//void Sprite::move_Right() {
-//	x_loc += 2;
-//}
-//
-//void Sprite::move_Left(void) {
-//	this->x_loc -= 2.0;
-//}
-//
+void Obstacles::move_Right() {
+	x_loc += 5;
+	if (this->GetX() >= 1280 + this->getFrameW())
+		x_loc = - this->getFrameW();
+}
 
-
+void Obstacles::move_Left() {
+	x_loc -= 5;
+	if (this->GetX() <= -this->getFrameW()) {
+		x_loc = 1280 + this->getFrameW();
+		y_loc = rand() % 720 - this->getFrameH() + this->getFrameH();
+	}
+}
