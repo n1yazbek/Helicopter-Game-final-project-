@@ -2,6 +2,7 @@
 #include "Helicopter.h"
 #include "Sprite.h"
 #include "Obstacles.h"
+#include <SDL_ttf.h>
 
 #define fps 60
 using namespace std;
@@ -20,8 +21,11 @@ void cap_framerate(Uint32 starting_tick) {
 }
 
 int main(int argc, char* args[]) {
+
 	if (SDL_Init(SDL_INIT_VIDEO) > 0)
 		cerr << "SDL_INIT has failed. ERROR: " << SDL_GetError() << endl;
+	if (TTF_Init() < 0)
+		cerr << "TTF failed : " << TTF_GetError() << endl;
 	if (!((IMG_Init(IMG_INIT_PNG) || (IMG_Init(IMG_INIT_JPG)))))
 		cerr << "IMG_INIT has failed. ERROR: " << SDL_GetError() << endl;
 	else
@@ -31,9 +35,9 @@ int main(int argc, char* args[]) {
 	Uint32 starting_tick;
 	
 	GameWindow window("Helicopter Game");
-	SDL_Texture* background = window.loadTexture("clouds_f.jpg");
-	SDL_Texture* heli = window.loadTexture("helico_f.png");
-	SDL_Texture* wall = window.loadTexture("fire_image.png");
+	SDL_Texture* background = window.loadTexture("images\\clouds_f.jpg");
+	SDL_Texture* heli = window.loadTexture("images\\helico_f.png");
+	SDL_Texture* wall = window.loadTexture("images\\fire_image.png");
 	Sprite platform(0, 0, 7680, 720, background, 1, 6, 1000);
 	Helicopter helic(100, 100, 423, 600, heli, 4, 1, 80);
 	Obstacles fire(900, 300, 738, 50, wall, 1, 5, 500);
@@ -59,11 +63,18 @@ int main(int argc, char* args[]) {
 						helic.move_Left();
 			}
 		}
-		if (starting_tick > lastTime + 1000) {
+		if (starting_tick > lastTime) {
 			fire.move_Left();
+			helic.score = starting_tick / 1000;
+			cout << "\n" << helic.score << endl;
 			lastTime = starting_tick;
 		}
-		
+		if (helic == fire) {
+			cout << "Operationoverloading is working" << endl;
+			gameRun = false;
+
+		}
+
 		window.clear();
 		window.render(platform);
 		window.render(helic);

@@ -38,5 +38,6 @@ public:
 	int getCols()const;
 	int getAnimSpeed()const;
 	//friend bool operator== (const Car& c1, const Car& c2);
+	friend bool operator==(const Sprite& helic, const Sprite& fire);
 };
 

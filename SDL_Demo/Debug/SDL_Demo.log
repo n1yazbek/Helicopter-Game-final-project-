@@ -1,4 +1,8 @@
-﻿  Main.cpp
+﻿  GameWindow.cpp
+D:\VSCode Projects\SDL_Demo\SDL_Demo\GameWindow.cpp(49,21): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+D:\VSCode Projects\SDL_Demo\SDL_Demo\GameWindow.cpp(50,21): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  Helicopter.cpp
+  Main.cpp
   Obstacles.cpp
   Sprite.cpp
   Generating Code...
