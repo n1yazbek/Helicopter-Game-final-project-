@@ -1,5 +1,6 @@
 #include "GameWindow.h"
 
+
 GameWindow::GameWindow(const char* title)
 	:window(NULL), renderer(NULL){	
 	window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, 
@@ -36,7 +37,6 @@ void GameWindow::render(const Sprite& sprite) {
 		src.x = sprite.getFrameW() * time_c;
 		src.w = sprite.getRect().w;
 		src.h = sprite.getRect().h;
-		cout << "Update helic is working" << endl;
 	}
 	else{
 		src.x = sprite.getRect().x;
@@ -52,32 +52,20 @@ void GameWindow::render(const Sprite& sprite) {
 	dst.h = sprite.getRect().h;
 
 	SDL_Texture* txt = sprite.GetTex();
-	//clear();
 	SDL_RenderCopy(renderer, txt, &src, &dst);
 }
 
-//void GameWindow::renderFrame(Sprite& sprite) {
-//	int frameW = sprite.getFrameW(), frameH = sprite.getFrameH();
-//	SDL_QueryTexture(sprite.GetTex(), NULL, NULL, &frameW, &frameH);
-//	SDL_Rect src;
-//	int frame=(SDL_GetTicks()/100)% sprite.frameCount;
-//	src.x = sprite.getFrameW();
-//	src.y = sprite.getFrameH() * frame;
-//	src.w = sprite.getFrameW();
-//	src.h = sprite.getFrameH();
-//
-//	SDL_Rect dst;
-//	dst.x = sprite.GetX();
-//	dst.y = sprite.GetY();
-//	dst.w = sprite.getRect().w;
-//	dst.h = sprite.getRect().h;
-//
-//	SDL_Texture* txt = sprite.GetTex();
-//	SDL_RenderCopy(renderer, txt, &src, &dst);
-//}
 
-void GameWindow::Update(float dt) {
+void GameWindow::renderScore( Helicopter& helic) {
 	
+	SDL_QueryTexture(helic.scoreText, NULL, NULL, &helic.texW, &helic.texH);
+	SDL_RenderCopy(renderer, helic.scoreText, NULL, &helic.scoreRect);
+}
+
+void GameWindow::textCreator(TTF_Font* font, SDL_Color color, const char* text, Helicopter&helic)
+{
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font, text, color);
+	 helic.scoreText = SDL_CreateTextureFromSurface(renderer, textSurface);
 }
 
 
@@ -93,8 +81,15 @@ int GameWindow::GetHeight() const{
 	return height;
 }
 
+SDL_Renderer* GameWindow::getRenderer() const
+{
+	return this->renderer;
+}
+
 GameWindow::~GameWindow() {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+	IMG_Quit();
 	SDL_Quit();
 }
+

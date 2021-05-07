@@ -1,8 +1,13 @@
+#include <fstream>
+#include <sstream>
+#include <string>
 #include "GameWindow.h"
 #include "Helicopter.h"
 #include "Sprite.h"
 #include "Obstacles.h"
+#include "Vector.h"
 #include <SDL_ttf.h>
+
 
 #define fps 60
 using namespace std;
@@ -31,17 +36,24 @@ int main(int argc, char* args[]) {
 	else
 		cout << "PNG SUCCESS KRASAVA" << endl;
 	SDL_Event event;
-	bool gameRun = true;
+	bool gameRun = true, retry = false, menu = true;
 	Uint32 starting_tick;
 	
 	GameWindow window("Helicopter Game");
 	SDL_Texture* background = window.loadTexture("images\\clouds_f.jpg");
 	SDL_Texture* heli = window.loadTexture("images\\helico_f.png");
 	SDL_Texture* wall = window.loadTexture("images\\fire_image.png");
+	SDL_Texture* explosionn = window.loadTexture("images\\explosion_1.png");
+	TTF_Font* font = TTF_OpenFont("fonts\\Mosangen.ttf", 75);
+	SDL_Color color = { 0, 0, 0, 0 };
 	Sprite platform(0, 0, 7680, 720, background, 1, 6, 1000);
+	Sprite explosion(250, 150, 6000, 389, explosionn, 1, 15, 50);
 	Helicopter helic(100, 100, 423, 600, heli, 4, 1, 80);
 	Obstacles fire(900, 300, 738, 50, wall, 1, 5, 500);
-
+	Vector scoreV;
+	fstream scoreFile;
+	
+	
 	while(gameRun) 
 	{
 		starting_tick = SDL_GetTicks();
@@ -65,23 +77,79 @@ int main(int argc, char* args[]) {
 		}
 		if (starting_tick > lastTime) {
 			fire.move_Left();
-			helic.score = starting_tick / 1000;
-			cout << "\n" << helic.score << endl;
-			lastTime = starting_tick;
+			
+			if (starting_tick % 10 == 0) {
+				helic.score++;	
+			}
+			lastTime = starting_tick;	
 		}
-		if (helic == fire) {
-			cout << "Operationoverloading is working" << endl;
+		
+
+
+		if (helic == fire) {//operator overloading
+			scoreFile.open("Scores.txt", ios::app);
+			if (scoreFile.is_open()) {
+				scoreFile << helic.score << endl;
+				scoreFile.close();
+			}
+			
+			//cout <<score<<endl<<scoreV.size()<<"\n"<< scoreV << endl;
 			gameRun = false;
-
 		}
+		scoreFile.open("Scores.txt", ios::in);
+		if (scoreFile.is_open()) {
+			string line; int i = 0, temp = 0;
+			while (getline(scoreFile, line)) {
+				stringstream score(line);
+				score >> temp;
+				scoreV.insert(i, temp);
+				i++;
+			}
+			scoreFile.close();
+		}
+		int record = scoreV.max();
+		string score_str = "score ";
+		string num = to_string(helic.score);
+		score_str.append(num);
+		string top = "          top score ";
+		string top_scr_num = to_string(record);
+		top.append(top_scr_num);
+		score_str.append(top);
+		const char* score = score_str.c_str();
 
+		//const char* p = num.c_str();
+		//strcat(s, p);
+		//window.textCreator(font, color, p, helic);
+		window.textCreator(font, color, score, helic);
 		window.clear();
+		
 		window.render(platform);
 		window.render(helic);
 		window.render(fire);
+		window.renderScore(helic);
 		window.display();
 		cap_framerate(starting_tick);
 	}
+
+	/*while (!gameRun && !retry && menu) {
+		window.render(platform);
+		window.render(explosion);
+		window.renderScore(helic);
+		window.display();
+		while (SDL_PollEvent(&event))
+		{
+			if (event.type == SDL_QUIT) { menu = false; }
+			if (event.type == SDL_KEYDOWN) {
+				if (event.key.keysym.sym == SDLK_ESCAPE)
+					menu = false;
+				if (event.key.keysym.sym == SDLK_KP_ENTER)
+					gameRun = true;
+				if (event.key.keysym.sym == SDLK_AC_HOME)
+					gameRun = true;
+			}
+		}
+	}*/
+	
 	window.~GameWindow();
 	return 0;
 }
