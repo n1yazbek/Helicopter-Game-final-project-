@@ -27,6 +27,6 @@ void Obstacles::move_Left() {
 	x_loc -= 12;
 	if (this->GetX() <= -this->getFrameW()) {
 		x_loc = 1280 + this->getFrameW();  //the 75 is the height of the score text
-		y_loc = rand() % (720 - this->getFrameH()) + (this->getFrameH()+75);
+		y_loc = rand() % (720 - (this->getFrameH()+75)) + (this->getFrameH()+75);
 	}
 }

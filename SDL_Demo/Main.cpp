@@ -7,7 +7,7 @@
 #include "Obstacles.h"
 #include "Vector.h"
 #include <SDL_ttf.h>
-
+#include <cstdlib>
 
 #define fps 60
 using namespace std;
@@ -52,6 +52,8 @@ int main(int argc, char* args[]) {
 	Obstacles fire(900, 300, 738, 50, wall, 1, 5, 500);
 	Vector scoreV;
 	fstream scoreFile;
+	int* pScore = new int[50];
+	int gms_plyd = 0, record = 0, i = 0;
 	
 	
 	while(gameRun) 
@@ -77,9 +79,8 @@ int main(int argc, char* args[]) {
 		}
 		if (starting_tick > lastTime) {
 			fire.move_Left();
-			
-			if (starting_tick % 10 == 0) {
-				helic.score++;	
+			if (fire.GetX() <= 5) {
+				helic.score += 1;
 			}
 			lastTime = starting_tick;	
 		}
@@ -87,46 +88,61 @@ int main(int argc, char* args[]) {
 
 
 		if (helic == fire) {//operator overloading
-			scoreFile.open("Scores.txt", ios::app);
+			scoreFile.open("Scores.txt", ios::app );
 			if (scoreFile.is_open()) {
 				scoreFile << helic.score << endl;
 				scoreFile.close();
 			}
-			
-			//cout <<score<<endl<<scoreV.size()<<"\n"<< scoreV << endl;
+			//cout <<helic.score<<endl<<scoreV.size()<<"\n"<< scoreV << endl;
 			gameRun = false;
 		}
-		scoreFile.open("Scores.txt", ios::in);
-		if (scoreFile.is_open()) {
-			string line; int i = 0, temp = 0;
-			while (getline(scoreFile, line)) {
-				stringstream score(line);
-				score >> temp;
-				scoreV.insert(i, temp);
-				i++;
+		
+		//scoreFile.open("Scores.txt", ios::in);
+		//if (scoreFile.is_open()) {
+		//	string line; int temp = 0;
+		//	while (getline(scoreFile, line)) {
+		//		stringstream score(line);
+		//		score >> temp;
+		//		pScore[gms_plyd] = temp;
+		//		
+		//			//temp = stoi(line);
+		//			/*scoreV.insert(i, temp);*/
+		//			gms_plyd++;
+		//			//cout << endl << temp << endl;
+		//		
+		//	}
+		//	scoreFile.close();
+		//}
+		//int record = scoreV.max();
+		/*while(i<=gms_plyd) {
+			if (pScore[i] > record) {
+				record = pScore[i];
 			}
-			scoreFile.close();
-		}
-		int record = scoreV.max();
+			i++;
+		}*/
 		string score_str = "score ";
 		string num = to_string(helic.score);
 		score_str.append(num);
-		string top = "          top score ";
+		/*string top = "        top score ";
 		string top_scr_num = to_string(record);
 		top.append(top_scr_num);
-		score_str.append(top);
+		score_str.append(top);*/
 		const char* score = score_str.c_str();
 
-		//const char* p = num.c_str();
-		//strcat(s, p);
-		//window.textCreator(font, color, p, helic);
+		string best_score_str = "top score ";
+		string num1 = to_string(helic.BestScore);
+		best_score_str.append(num1);
+		const char* best_score = best_score_str.c_str();
+
+
+		window.BestScore_Creator(font, color, best_score, helic);
 		window.textCreator(font, color, score, helic);
 		window.clear();
-		
 		window.render(platform);
 		window.render(helic);
 		window.render(fire);
 		window.renderScore(helic);
+		window.render_BestScore(helic);
 		window.display();
 		cap_framerate(starting_tick);
 	}

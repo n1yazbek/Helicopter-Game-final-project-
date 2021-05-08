@@ -17,7 +17,7 @@ class Vector
 public:
 	// Constructors, destructor
 	Vector() {elementNum=0;pData=NULL;}
-	Vector(const Vector& theOther);
+	//Vector(const Vector& theOther);
 	~Vector() {delete[]pData;}
 	
 	// returns the array size 

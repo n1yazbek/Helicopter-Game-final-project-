@@ -5,9 +5,13 @@ Helicopter::Helicopter(int x_loc, int y_loc, int w,
 	:Sprite(x_loc, y_loc, w, h, tex, num_rows, num_cols, animspeed) {
 	score = 0;
 	scoreRect.x = scoreRect.y = 0;
-	scoreRect.w = 1280; scoreRect.h = 75;
+	scoreRect.w = 400; scoreRect.h = 60;
 	int texW = 0;
 	int texH = 0;
+	BestScoreRect.x =680, BestScoreRect.y = 0;
+	BestScoreRect.w = 600; BestScoreRect.h = 60;
+	int BestTexW = 0;
+	int BestTexH = 0;
 }
 
 void Helicopter::move_Up() {

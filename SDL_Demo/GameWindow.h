@@ -20,6 +20,8 @@ public:
 	void render(const Sprite& sprite);
 	void renderScore( Helicopter& helic);
 	void textCreator(TTF_Font* font, SDL_Color color, const char* text, Helicopter& helic);
+	void render_BestScore(Helicopter& helic);
+	void BestScore_Creator(TTF_Font* font, SDL_Color color, const char* text, Helicopter& helic);
 	void display();
 	int GetWidth()const;
 	int GetHeight()const;
