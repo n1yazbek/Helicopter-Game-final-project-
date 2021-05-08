@@ -7,7 +7,6 @@
 #include "Obstacles.h"
 #include "Vector.h"
 #include <SDL_ttf.h>
-#include <cstdlib>
 
 #define fps 60
 using namespace std;
@@ -52,10 +51,9 @@ int main(int argc, char* args[]) {
 	Obstacles fire(900, 300, 738, 50, wall, 1, 5, 500);
 	Vector scoreV;
 	fstream scoreFile;
-	int* pScore = new int[50];
-	int gms_plyd = 0, record = 0, i = 0;
+	int cnt = 0;
 	
-	
+
 	while(gameRun) 
 	{
 		starting_tick = SDL_GetTicks();
@@ -88,49 +86,52 @@ int main(int argc, char* args[]) {
 
 
 		if (helic == fire) {//operator overloading
-			scoreFile.open("Scores.txt", ios::app );
-			if (scoreFile.is_open()) {
-				scoreFile << helic.score << endl;
-				scoreFile.close();
+
+			int length;
+			ifstream filestr;
+
+			scoreFile.open("Scores.txt", ios::binary); 
+			scoreFile.seekg(0, ios::end);
+			length = scoreFile.tellg();
+			scoreFile.close();
+
+			if (length == 0) {
+				scoreFile.open("Scores.txt", ios::out);
+				if (scoreFile.is_open()) {
+					scoreFile << helic.score << endl;
+					scoreFile.close();
+				}
 			}
-			//cout <<helic.score<<endl<<scoreV.size()<<"\n"<< scoreV << endl;
+			else {
+				scoreFile.open("Scores.txt", ios::app);
+				if (scoreFile.is_open()) {
+					scoreFile << helic.score << endl;
+					scoreFile.close();
+				}
+			}
+			cout <<helic.score<<endl<<scoreV.size()<<"\n"<< scoreV << endl<<scoreV.max();
 			gameRun = false;
 		}
 		
-		//scoreFile.open("Scores.txt", ios::in);
-		//if (scoreFile.is_open()) {
-		//	string line; int temp = 0;
-		//	while (getline(scoreFile, line)) {
-		//		stringstream score(line);
-		//		score >> temp;
-		//		pScore[gms_plyd] = temp;
-		//		
-		//			//temp = stoi(line);
-		//			/*scoreV.insert(i, temp);*/
-		//			gms_plyd++;
-		//			//cout << endl << temp << endl;
-		//		
-		//	}
-		//	scoreFile.close();
-		//}
-		//int record = scoreV.max();
-		/*while(i<=gms_plyd) {
-			if (pScore[i] > record) {
-				record = pScore[i];
+		scoreFile.open("Scores.txt", ios::in);
+		if (scoreFile.is_open()) {
+			string line; int temp = cnt=0;
+			while (getline(scoreFile, line)) {
+				stringstream score(line);
+				score >> temp;
+				scoreV.insert(cnt, temp);
+				cnt++;
 			}
-			i++;
-		}*/
+		}
+
+
 		string score_str = "score ";
 		string num = to_string(helic.score);
 		score_str.append(num);
-		/*string top = "        top score ";
-		string top_scr_num = to_string(record);
-		top.append(top_scr_num);
-		score_str.append(top);*/
 		const char* score = score_str.c_str();
 
 		string best_score_str = "top score ";
-		string num1 = to_string(helic.BestScore);
+		string num1 = to_string(scoreV.max());
 		best_score_str.append(num1);
 		const char* best_score = best_score_str.c_str();
 
