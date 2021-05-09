@@ -84,9 +84,10 @@ int main(int argc, char* args[]) {
 			lastTime = starting_tick;	
 		}
 		
+cap_framerate(starting_tick);
 
-		cap_framerate(starting_tick);
-		if (helic == fire) {//operator overloading
+
+		if (helic == fire) {//operator overloading-> if the helic crashes
 
 			int length;
 			ifstream filestr;
@@ -97,7 +98,6 @@ int main(int argc, char* args[]) {
 			scoreFile.close();
 
 			if (length == 0) {
-				
 				scoreFile.open("Scores.txt", ios::out);
 				if (scoreFile.is_open()) {
 					scoreFile << helic.getScore() << endl;
@@ -111,7 +111,7 @@ int main(int argc, char* args[]) {
 					scoreFile.close();
 				}
 			}
-			cout <<helic.getScore()<<endl<<scoreV.size()<<"\n"<< scoreV << endl<<scoreV.max();
+			
 			gameRun = false;
 		}
 		
@@ -150,25 +150,9 @@ int main(int argc, char* args[]) {
 		cap_framerate(starting_tick);
 	}
 
-	/*while (!gameRun && !retry && menu) {
-		window.render(platform);
-		window.render(explosion);
-		window.renderScore(helic);
-		window.display();
-		while (SDL_PollEvent(&event))
-		{
-			if (event.type == SDL_QUIT) { menu = false; }
-			if (event.type == SDL_KEYDOWN) {
-				if (event.key.keysym.sym == SDLK_ESCAPE)
-					menu = false;
-				if (event.key.keysym.sym == SDLK_KP_ENTER)
-					gameRun = true;
-				if (event.key.keysym.sym == SDLK_AC_HOME)
-					gameRun = true;
-			}
-		}
-	}*/
 	scoreV.~Vector();
+	helic.~Helicopter();
+	fire.~Obstacles();
 	window.~GameWindow();
 
 	return 0;
