@@ -8,10 +8,30 @@ Sprite::Sprite(int x_loc, int y_loc, int w, int h,
 	rectangle.y = 0;
 	texHeight = h;
 	texWidth = w;
+	int exception = -9999;
+	try {
+		if (rows<=0 || cols<=0 || animspeed<=0) {
+			throw exception;
+			std::cerr << "Invalid values for width or height";
+		}
+	}
+	catch(int  exception) {
+		std::cout<<"exception caught";
+	}
 	frameWidth = texWidth / num_cols;
 	frameHeight = texHeight / num_rows;
 	rectangle.w = frameWidth;
 	rectangle.h = frameHeight;
+}
+
+Sprite::Sprite()
+{
+}
+
+Sprite::~Sprite() {
+	SDL_DestroyTexture(texture);
+	IMG_Quit();
+	SDL_Quit();
 }
 
 int Sprite::GetW_tex() const {
@@ -20,10 +40,6 @@ int Sprite::GetW_tex() const {
 int Sprite::GetH_tex() const {
 	return texHeight;
 }
-
-//Sprite::~Sprite() {
-//	SDL_DestroyTexture(texture);
-//}
 
 void Sprite::SetX(int n) {
 	this->x_loc = n;

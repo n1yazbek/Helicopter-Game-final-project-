@@ -1,5 +1,9 @@
 #include "Helicopter.h"
 
+Helicopter::Helicopter()
+{
+}
+
 Helicopter::Helicopter(int x_loc, int y_loc, int w,
 	int h, SDL_Texture* tex, int num_rows, int num_cols, int animspeed)
 	:Sprite(x_loc, y_loc, w, h, tex, num_rows, num_cols, animspeed) {
@@ -12,6 +16,10 @@ Helicopter::Helicopter(int x_loc, int y_loc, int w,
 	BestScoreRect.w = 600; BestScoreRect.h = 60;
 	int BestTexW = 0;
 	int BestTexH = 0;
+}
+
+Helicopter::~Helicopter()
+{
 }
 
 void Helicopter::move_Up() {
@@ -37,4 +45,21 @@ void Helicopter::move_Left() {
 	x_loc -= 3;
 	if (this->GetX() <= 0)
 		x_loc = 0;
+}
+
+void Helicopter::Score()
+{
+	score++;;
+}
+
+int Helicopter::getScore() const
+{
+	return this->score;
+}
+
+int Helicopter::operator++(int)
+{
+	Helicopter temp;
+	temp.score = score++;
+	return temp.score;
 }

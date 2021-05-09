@@ -5,6 +5,14 @@ Obstacles::Obstacles(int x_loc, int y_loc, int w, int h,
 	SDL_Texture* tex, int num_rows, int num_cols, int animspeed)
 	:Sprite(x_loc, y_loc, w, h, tex, num_rows, num_cols, animspeed){}
 
+Obstacles::Obstacles()
+{
+}
+
+Obstacles::~Obstacles()
+{
+}
+
 void Obstacles::move_Up() {
 	y_loc -= 5;
 	if (this->GetY() <= - this->getFrameH())

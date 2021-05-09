@@ -69,7 +69,6 @@ void GameWindow::textCreator(TTF_Font* font, SDL_Color color, const char* text, 
 }
 
 
-
 void GameWindow::render_BestScore(Helicopter& helic) {
 
 	SDL_QueryTexture(helic.BestScoreText, NULL, NULL, &helic.BestTexW, &helic.BestTexH);
@@ -81,12 +80,6 @@ void GameWindow::BestScore_Creator(TTF_Font* font, SDL_Color color, const char* 
 	SDL_Surface* textSurface = TTF_RenderText_Solid(font, text, color);
 	helic.BestScoreText = SDL_CreateTextureFromSurface(renderer, textSurface);
 }
-
-
-
-
-
-
 
 void GameWindow::display() {
 	SDL_RenderPresent(renderer);

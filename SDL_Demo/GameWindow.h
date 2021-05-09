@@ -13,7 +13,6 @@ class GameWindow
 	int width = 1280;
 	int height = 720;
 public:
-
 	GameWindow(const char* title);
 	SDL_Texture* loadTexture(const char* filename);
 	void clear();
@@ -27,5 +26,9 @@ public:
 	int GetHeight()const;
 	SDL_Renderer* getRenderer()const;
 	~GameWindow();
-
 };
+
+
+
+
+

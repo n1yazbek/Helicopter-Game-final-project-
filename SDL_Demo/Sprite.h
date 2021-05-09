@@ -8,7 +8,6 @@ class Sprite{
 private:
 	SDL_Rect rectangle;
 	SDL_Texture* texture;
-	/*SDL_Rect image_rect;*/
 	int frameWidth, frameHeight;
 	int rows, cols;
 	int texWidth, texHeight;
@@ -17,9 +16,10 @@ protected:
 	int x_loc, y_loc;
 	int animspeed;
 public:
-	
 	Sprite(int x_loc, int y_loc, int w, int h,
 		SDL_Texture* tex, int num_rows, int num_cols, int animspeed);
+	Sprite();
+	~Sprite();
 	void SetX(int n);
 	void SetY(int n);
 	double GetX()const;
@@ -38,7 +38,7 @@ public:
 	int getRows()const;
 	int getCols()const;
 	int getAnimSpeed()const;
-	//friend bool operator== (const Car& c1, const Car& c2);
+
 	friend bool operator==(const Sprite& helic, const Sprite& fire);
 };
 

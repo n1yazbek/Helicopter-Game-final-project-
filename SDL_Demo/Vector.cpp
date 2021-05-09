@@ -1,157 +1,175 @@
 #include "Vector.h"
+#include <new>
 
-std::ostream& operator<<(std::ostream& os, const Vector& v)
+
+Vector::Vector(const Vector& theOther)
 {
-    os << "[";
-
-    for (int i = 0; i < v.elementNum; i++)
-    {
-        os << v.pData[i] << ' ';
-    }
-
-    os << "]";
-
-    return os;
+	elementNum = theOther.elementNum;
+	pData = new int[elementNum];
+	for (int i = 0; i < elementNum; i++)
+	{
+		pData[i] = theOther.pData[i];
+	}
 }
 
-// clears the array
 void Vector::clear()
 {
-
-    elementNum = 0;
-    delete[] pData;
+	elementNum = 0;
+	delete[] pData;
+	pData = NULL;
 }
-
 
 
 int Vector::max() {
-    int n = 0;
-    for (int i = 0; i <= elementNum; i++) {
-        if (pData != NULL && pData[i] >= n)
-            n = pData[i];
-    }
-    return n;
+	int n = 0;
+	for (int i = 0; i <= elementNum; i++) {
+		if (pData != NULL && pData[i] >= n)
+			n = pData[i];
+	}
+	return n;
 }
 
+void Vector::erase(unsigned int position)
+{
+	int* temp;
+	if (position < elementNum)
+	{
+		elementNum--;
+		temp = new int[elementNum];
+		for (int i = 0; i < position; i++)
+		{
+			temp[i] = pData[i];
+		}
+		for (int i = position; i < elementNum; i++)
+		{
+			temp[i] = pData[i + 1];
+		}
+		delete[] pData;
+		pData = temp;
+	}
+}
 
-
-// erases (deletes) the array element with the given index;
-// valid indices: from 0 to size-1
-//void Vector::erase(unsigned int position)
-//{
-//    if (position < elementNum && position >= 0)
-//    {
-//        elementNum--;
-//        int* temp = new int[elementNum];
-//        int i = 0;
-//        for (i = 0; i < position; i++)
-//        {
-//            temp[i] = pData[i];
-//            // std::cout << pData[i] << ' ';
-//        }
-//        for (i = position + 1; i <= elementNum; i++)
-//        {
-//            temp[i - 1] = pData[i];
-//            // std::cout << pData[i] << ' ';
-//        }
-//        delete[] pData;
-//        pData = new int[elementNum];
-//
-//        for (int i = 0; i < elementNum; i++)
-//        {
-//            pData[i] = temp[i];
-//        }
-//        delete[] temp;
-//    }
-//}
-
-// returns the array element with the given index, making possible to modify the element;
-// valid indices: between 0 and size()-1
 int& Vector::at(unsigned int position)
 {
-    int& data = pData[position];
-    return data;
+	if (position < elementNum)
+	{
+		return pData[position];
+	}
+	else
+	{
+		throw;
+	}
 }
 
-// returns the array element with the given index, without possibility to modify the element (see const keyword)
-// valid indices: between 0 and size()-1
 const int& Vector::at(unsigned int position) const
 {
-    const int& data = pData[position];
-    return data;
+	if (position < elementNum)
+	{
+		return pData[position];
+	}
+	else
+	{
+		throw;
+	}
 }
 
-// inserts a new element into a place with the given index;
-// if the index exceeds the array size, then the size should be increased, and the empty places should be filled with 0 (zero)
 bool Vector::insert(unsigned int position, int element)
 {
-    if (position > UINT32_MAX)
-        return false;
-    int* temp;
-    if (position >= elementNum)
-    {
-        temp = new int[position + 1];
-        for (unsigned int i = 0; i < position; i++)
-        {
-            if (i < elementNum)
-            {
-                temp[i] = pData[i];
-            }
-            else
-            {
-                temp[i] = 0;
-            }
-        }
-        temp[position] = element;
-        elementNum = position + 1;
-    }
-    else
-    {
-        temp = new int[elementNum + 1];
-        for (unsigned int i = 0, j = 0; i < elementNum; i++, j++)
-        {
-            if (i == position)
-            {
-                temp[j] = element;
-                temp[j + 1] = pData[i];
-                j++;
-                continue;
-            }
-            temp[j] = pData[i];
-        }
-        elementNum++;
-    }
-    pData = new int[elementNum];
-    for (int i = 0; i < elementNum; i++)
-    {
-        pData[i] = temp[i];
-    }
-    return true;
+	bool state = true;
+	int* temp;
+
+	if (position < elementNum)
+	{
+		elementNum++;
+		temp = new (std::nothrow) int[elementNum];
+		if (temp == 0)
+		{
+			state = false;
+		}
+
+		for (int i = 0; i < position; i++)
+		{
+			temp[i] = pData[i];
+		}
+		temp[position] = element;
+		for (int i = position + 1; i < elementNum; i++)
+		{
+			temp[i] = pData[i - 1];
+		}
+		delete[] pData;
+		pData = temp;
+
+		return state;
+	}
+	else
+	{
+		state = false;
+		temp = new int[position + 1];
+		for (int i = 0; i < elementNum; i++)
+		{
+			temp[i] = pData[i];
+		}
+		for (int i = elementNum; i < position; i++)
+		{
+			temp[i] = 0;
+		}
+		temp[position] = element;
+		elementNum = position + 1;
+		delete[] pData;
+		pData = temp;
+		return state;
+	}
 }
 
-// Operator=
-const Vector& Vector::operator=(const Vector& theOther)
+const Vector& Vector::operator= (const Vector& theOther)
 {
-    if (this != &theOther)
-    {
-        elementNum = theOther.elementNum;
-        pData = new int[elementNum];
-        for (int i = 0; i < elementNum; i++)
-        {
-            pData[i] = theOther.pData[i];
-        }
-    }
-    return *this;
+	if (this != &theOther)
+	{
+		elementNum = theOther.elementNum;
+		int* temp = new int[elementNum];
+		for (int i = 0; i <= elementNum-1; i++)
+		{
+			temp[i] = theOther.pData[i];
+		}
+		pData = temp;
+	}
+	return *this;
 }
 
-// operator[]
-int& Vector::operator[](unsigned int position)
+int& Vector::operator [](unsigned int position)
 {
-    int& data = pData[position];
-    return data;
+	if (position < elementNum)
+	{
+		return pData[position];
+	}
+	else
+	{
+		throw;
+	}
 }
-const int& Vector::operator[](unsigned int position) const
+
+const int& Vector::operator [](unsigned int position)const
 {
-    const int& data = pData[position];
-    return data;
+	if (position < elementNum)
+	{
+		return pData[position];
+	}
+	else
+	{
+		throw;
+	}
 }
+
+std::ostream& operator << (std::ostream& os, const Vector& v)
+{
+	os << "The vector's elements: ";
+	for (int i = 0; i < v.elementNum; i++)
+	{
+		os << v.pData[i];
+		os << " ";
+	}
+	os << std::endl;
+	return os;
+}
+
+
