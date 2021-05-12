@@ -48,7 +48,7 @@ int main(int argc, char* args[]) {
 	Sprite platform(0, 0, 7680, 720, background, 1, 6, 1000);
 	Sprite explosion(250, 150, 6000, 389, explosionn, 1, 15, 50);
 	Helicopter helic(100, 100, 423, 600, heli, 4, 1, 80);
-	Obstacles fire(900, 300, 738, 50, wall, 1, 5, 500);
+	Obstacles fire(900, 300, 738, 50, wall, 1, 5, 250);
 	Vector scoreV;
 	fstream scoreFile;
 	int cnt = 0;
@@ -126,7 +126,6 @@ cap_framerate(starting_tick);
 			}
 		}
 
-		cap_framerate(starting_tick);
 		string score_str = "score ";
 		string num = to_string(helic.getScore());
 		score_str.append(num);

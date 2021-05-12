@@ -18,18 +18,16 @@ Helicopter::Helicopter(int x_loc, int y_loc, int w,
 	int BestTexH = 0;
 }
 
-Helicopter::~Helicopter()
-{
-}
+Helicopter::~Helicopter(){}
 
 void Helicopter::move_Up() {
-	y_loc-=25;
+	y_loc-=35;
 	if (this->GetY() <= scoreRect.h + scoreRect.y)
 		SetY(scoreRect.h + scoreRect.y);
 }
 
 void Helicopter::move_Down() {
-	y_loc += 25;
+	y_loc += 35;
 	if (this->GetY() >= 720 - this->getFrameH())
 		y_loc = 720 - this->getFrameH();
 }

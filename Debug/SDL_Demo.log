@@ -1,0 +1,23 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(519,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (SDL_Demo.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  GameWindow.cpp
+D:\VSCode Projects\SDL_Demo\SDL_Demo\GameWindow.cpp(49,21): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+D:\VSCode Projects\SDL_Demo\SDL_Demo\GameWindow.cpp(50,21): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  Helicopter.cpp
+  Main.cpp
+D:\VSCode Projects\SDL_Demo\SDL_Demo\Main.cpp(97,28): warning C4244: '=': conversion from 'std::streamoff' to 'int', possible loss of data
+  Obstacles.cpp
+  Sprite.cpp
+D:\VSCode Projects\SDL_Demo\SDL_Demo\Sprite.cpp(18,13): warning C4101: 'exception': unreferenced local variable
+  Vector.cpp
+D:\VSCode Projects\SDL_Demo\SDL_Demo\Vector.cpp(9,20): warning C4018: '<': signed/unsigned mismatch
+D:\VSCode Projects\SDL_Demo\SDL_Demo\Vector.cpp(25,20): warning C4018: '<=': signed/unsigned mismatch
+D:\VSCode Projects\SDL_Demo\SDL_Demo\Vector.cpp(39,21): warning C4018: '<': signed/unsigned mismatch
+D:\VSCode Projects\SDL_Demo\SDL_Demo\Vector.cpp(43,28): warning C4018: '<': signed/unsigned mismatch
+D:\VSCode Projects\SDL_Demo\SDL_Demo\Vector.cpp(90,21): warning C4018: '<': signed/unsigned mismatch
+D:\VSCode Projects\SDL_Demo\SDL_Demo\Vector.cpp(95,32): warning C4018: '<': signed/unsigned mismatch
+D:\VSCode Projects\SDL_Demo\SDL_Demo\Vector.cpp(108,21): warning C4018: '<': signed/unsigned mismatch
+D:\VSCode Projects\SDL_Demo\SDL_Demo\Vector.cpp(112,30): warning C4018: '<': signed/unsigned mismatch
+D:\VSCode Projects\SDL_Demo\SDL_Demo\Vector.cpp(130,21): warning C4018: '<=': signed/unsigned mismatch
+D:\VSCode Projects\SDL_Demo\SDL_Demo\Vector.cpp(166,20): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  SDL_Demo.vcxproj -> D:\VSCode Projects\SDL_Demo\Debug\Helico Game.exe
